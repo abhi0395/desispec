@@ -20,7 +20,7 @@ parser.add_argument('-i','--infile', type = str, default = None, required = True
 parser.add_argument('-t','--targetid', type = int, default = None, required = False,
                     help = 'plot specific targetid')
 parser.add_argument('--rebin',type = int, default = None, required = False,
-                    help = 'rebin')
+                    help = 'rebin (reduce pixel size by this factor)')
 parser.add_argument('--redrock',type = str, default = None, required = False,
                     help = 'redrock file')
 parser.add_argument('--spectype',type = str, default = None, required = False,
@@ -118,7 +118,8 @@ for tid in targetids :
         j=np.where(redshifts["TARGETID"]==tid)[0][0]
         line += " Z={} SPECTYPE={} ZWARN={}".format(redshifts["Z"][j],redshifts["SPECTYPE"][j],redshifts["ZWARN"][j])
         zval=redshifts["Z"][j]
-        tx = templates[(redshifts['SPECTYPE'][j], redshifts['SUBTYPE'][j])]
+        #tx = templates[(redshifts['SPECTYPE'][j], redshifts['SUBTYPE'][j])]
+        tx = templates[(redshifts['SPECTYPE'][j], '')]
         for band in spectra[0].bands:
             model_flux[band] = np.zeros(spectra[0].wave[band].shape)
             coeff = redshifts['COEFF'][j][0:tx.nbasis]
